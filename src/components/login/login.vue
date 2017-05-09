@@ -85,7 +85,7 @@
     </main>
 </template>
 
-<script lang="babel">
+<script>
     export default{
         name      : 'LoginPage',
         components: {},

@@ -130,38 +130,10 @@
                 ops.params = this.formData.forms;
                 this.loading = true;
                 ajax.any(ops).json((data)=>{
-                  if(Number.parseInt(data.code) == 200){
+                  if(Number.parseInt(data.code) === 200){
                     this.$emit('on-submit',data);
                   }
                 }).always((data)=>{this.loading = false;});
-            },
-            submitAjax2(){
-                this.loading = true;
-                $.ajax(this.url,{
-                    method: this.method,
-                    data:this.formData.forms,
-                    dataType:'json'
-                }).done( data=>{
-                    if(data.action == "validate")
-                    {
-                        let fields = this.$refs.ajaxForm.fields;
-                        let errors = data.args.errors||{};
-                        this.$refs.ajaxForm.fields.forEach(field => {
-                            if(errors[field.prop]){
-                                field.validateState = "error";
-                                field.validateMessage = typeof errors[field.prop]=='object'?errors[field.prop][0]:errors[field.prop];
-                            }
-                        });
-                    }else if(data.code == 200){
-                        this.$emit('on-submit',data);
-                    }
-                }).fail(data=>{
-                    this.$Modal.error({
-                        title: '错误',
-                        content: data.responseText?data.responseText.getBody():'网络异常'
-                    });
-
-                }).always(()=>{this.loading = false;})
             }
         },
         components:{}
